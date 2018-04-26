@@ -1,7 +1,7 @@
 package com.lopez.mytasks.service;
 
 import com.lopez.mytasks.config.AdminConfig;
-import com.lopez.mytasks.domain.CreatedTrelloCard;
+import com.lopez.mytasks.domain.CreatedTrelloCardDto;
 import com.lopez.mytasks.domain.Mail;
 import com.lopez.mytasks.domain.TrelloBoardDto;
 import com.lopez.mytasks.domain.TrelloCardDto;
@@ -29,9 +29,9 @@ public class TrelloService {
         return trelloClient.getTrelloBoards();
     }
 
-    public CreatedTrelloCard createdTrelloCard(final TrelloCardDto trelloCardDto) {
+    public CreatedTrelloCardDto createdTrelloCard(final TrelloCardDto trelloCardDto) {
 
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         ofNullable(newCard).ifPresent(card -> simpleEmailService.send(new Mail(adminConfig.getAdminMail(), "", SUBJECT, "New Card: " + trelloCardDto.getName() + " has been created on your Trello account")));
         return newCard;

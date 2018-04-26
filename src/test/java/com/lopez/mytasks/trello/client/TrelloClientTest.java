@@ -1,6 +1,6 @@
 package com.lopez.mytasks.trello.client;
 
-import com.lopez.mytasks.domain.CreatedTrelloCard;
+import com.lopez.mytasks.domain.CreatedTrelloCardDto;
 import com.lopez.mytasks.domain.TrelloBoardDto;
 import com.lopez.mytasks.domain.TrelloCardDto;
 import com.lopez.mytasks.trello.config.TrelloConfig;
@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,10 +70,10 @@ public class TrelloClientTest {
                 .queryParam("pos", "top")
                 .queryParam("idList", "test_id").build().encode().toUri();
 
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard("1", "Test Task", "http://test.com");
-        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "Test Task", "http://test.com");
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
         //When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
         //Then
         assertEquals("1", newCard.getId());
         assertEquals("Test Task", newCard.getName());

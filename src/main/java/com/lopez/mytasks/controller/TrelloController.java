@@ -1,9 +1,9 @@
 package com.lopez.mytasks.controller;
 
-import com.lopez.mytasks.domain.CreatedTrelloCard;
+import com.lopez.mytasks.domain.CreatedTrelloCardDto;
 import com.lopez.mytasks.domain.TrelloBoardDto;
 import com.lopez.mytasks.domain.TrelloCardDto;
-import com.lopez.mytasks.service.TrelloService;
+import com.lopez.mytasks.trello.facade.TrelloFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +15,14 @@ import java.util.List;
 public class TrelloController {
 
     @Autowired
-    private TrelloService trelloService;
+    private TrelloFacade trelloFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
-         return trelloService.fetchTrelloBoards();
+         return trelloFacade.fetchTrelloBoards();
     }
     @RequestMapping(method = RequestMethod.POST, value = "createTrelloCard")
-    public CreatedTrelloCard createdTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
-        return trelloService.createdTrelloCard(trelloCardDto);
+    public CreatedTrelloCardDto createdTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
+        return trelloFacade.createCard(trelloCardDto);
     }
-
 }

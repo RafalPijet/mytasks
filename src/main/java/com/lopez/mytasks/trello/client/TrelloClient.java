@@ -1,6 +1,6 @@
 package com.lopez.mytasks.trello.client;
 
-import com.lopez.mytasks.domain.CreatedTrelloCard;
+import com.lopez.mytasks.domain.CreatedTrelloCardDto;
 import com.lopez.mytasks.domain.TrelloBoardDto;
 import com.lopez.mytasks.domain.TrelloCardDto;
 import com.lopez.mytasks.trello.config.TrelloConfig;
@@ -59,7 +59,7 @@ public class TrelloClient {
                 .queryParam("lists", "all").build().encode().toUri();
         return url;
     }
-    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
+    public CreatedTrelloCardDto createNewCard(TrelloCardDto trelloCardDto) {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndPoint() + "/cards")
                 .queryParam("key", trelloConfig.getTrelloApiKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
@@ -67,6 +67,6 @@ public class TrelloClient {
                 .queryParam("desc", trelloCardDto.getDesc())
                 .queryParam("pos", trelloCardDto.getPos())
                 .queryParam("idList", trelloCardDto.getIdList()).build().encode().toUri();
-        return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
+        return restTemplate.postForObject(url, null, CreatedTrelloCardDto.class);
     }
 }
